@@ -1,21 +1,26 @@
+# install cv2 and mideapipe packages 
+
+
+
 import cv2
 import mediapipe as mp
 import time
 cap = cv2.VideoCapture(0)
 
 mpHands = mp.solutions.hands
-hands = mpHands.Hands()
+hands_detection = mpHands.Hands()
 mpDraw = mp.solutions.drawing_utils
 
 pTime = 0
-cTime = 0
+
 
 while True:
     succ , img = cap.read()
+    #you have to convert your BGR image to RGB because hands.process() method works on RGB image
     imgRGB = cv2.cvtColor(img , cv2.COLOR_BGR2RGB)
 
-    result = hands.process(imgRGB)
-
+    result = hands_detection.process(imgRGB)
+    # for existing HAND LANDMARKS
     if result.multi_hand_landmarks:
 
         for handLms in result.multi_hand_landmarks:
